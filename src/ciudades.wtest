@@ -1,0 +1,17 @@
+import ciudades.*
+import centrales.*
+describe "Tests de Springfield" {
+	
+	
+	test "burns con 10 varillas produce 1 Mkwh en springfield" {
+
+		burns.varilasDeUranio(10)
+		assert.equals(springfield.produccionEnergeticaParticular(burns),1000000)
+
+	}
+	
+	test "exBosque con una capacidad de 20 toneladas produce 18.5 Mkwh en springfield" {
+		ex_bosque.capacidadDeCarbon(20000000)
+		assert.equals(springfield.produccionEnergeticaParticular(ex_bosque), 18500000)
+	}
+}
