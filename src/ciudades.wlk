@@ -4,7 +4,11 @@ object springfield {
 	const velocidadDelViento = 10
 	const riquezaDelSuelo = 0.9
 	var centralesContaminantes = #{}
-	var centralesActivas = #{}
+	var centrales = #{}
+	
+	method agregarCentral(unaCentral){
+		centrales.add(unaCentral)
+	}
 	
 	method produccionEnergeticaParticular(unaCentral){
 		return unaCentral.produccionEnergetica(riquezaDelSuelo, velocidadDelViento)
@@ -21,6 +25,6 @@ object springfield {
 	} 
 	
 	method cubrioNecesidad(necesidad){
-		return centralesActivas.map({unaCentral => self.produccionEnergeticaParticular(unaCentral)}).sum() >= necesidad
+		return centrales.map({unaCentral => self.produccionEnergeticaParticular(unaCentral)}).sum() >= necesidad
 	}
 }
