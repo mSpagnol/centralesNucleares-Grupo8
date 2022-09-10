@@ -52,3 +52,9 @@ object turbina1{
 	
 	method produccionEolica () = 200000
 }
+
+object hidroelectrica {
+	method produccionEnergetica(caudalDeRio){
+		return 2000000 * caudalDeRio 		
+	}	
+}
