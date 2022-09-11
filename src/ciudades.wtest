@@ -5,13 +5,46 @@ describe "Tests de Springfield" {
 	
 	test "burns con 10 varillas produce 1 Mkwh en springfield" {
 
-		burns.varilasDeUranio(10)
-		assert.equals(springfield.produccionEnergeticaParticular(burns),1000000)
+		burns.varillasDeUranio(10)
+		assert.equals(springfield.produccionEnergeticaParticular(burns),1)
 
 	}
 	
 	test "exBosque con una capacidad de 20 toneladas produce 18.5 Mkwh en springfield" {
-		ex_bosque.capacidadDeCarbon(20000000)
-		assert.equals(springfield.produccionEnergeticaParticular(ex_bosque), 18500000)
+		ex_bosque.capacidadDeCarbon(20)
+		assert.equals(springfield.produccionEnergeticaParticular(ex_bosque), 18.5)
 	}
+	
+	test "elSuspiro produce 2 Mkwh en springfield" {
+		assert.equals(springfield.produccionEnergeticaParticular(elSuspiro),2)
+	}
+	
+	test "Teniendo las centrales anteriores, las centrales contaminantes de sprinfield es una colección que adentro tiene sólo a exBosque" {
+		const centralesContaminantes = #{ex_bosque}
+		burns.varillasDeUranio(10)
+		ex_bosque.capacidadDeCarbon(20)
+		assert.equals(springfield.centralesContaminantes(),centralesContaminantes)		
+	}
+	
+	test "Teniendo las centrales anteriores, springfield cubrió su necesidad energética si ésta era de 20 Mkwh" {
+		burns.varillasDeUranio(10)
+		ex_bosque.capacidadDeCarbon(20)
+		springfield.necesidadEnergetica(20)
+		assert.that(springfield.cubrioNecesidad())
+	}
+	
+	test "Teniendo las centrales anteriores, springfield está al horno si posee una necesidad energética de 30 Mkwh." {
+		burns.varillasDeUranio(10)
+		ex_bosque.capacidadDeCarbon(20)
+		springfield.necesidadEnergetica(30)
+		assert.that(springfield.estaAlHorno())
+	}
+	
+	test "las centrales más productoras de la región es una colección con exBosque de springfield y la central hidroeléctrica de albuquerque"{
+		const centralesMasProductoras = [ex_bosque,hidroelectrica]
+		burns.varillasDeUranio(10)
+		ex_bosque.capacidadDeCarbon(20)
+		assert.equals(region.centralMasProduceEnRegion(),centralesMasProductoras)
+	}
+	
 }

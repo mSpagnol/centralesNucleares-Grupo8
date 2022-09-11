@@ -12,9 +12,11 @@ object springfield {
 	const velocidadDelViento = 10
 	const riquezaDelSuelo = 0.9
 	var centrales = #{burns, ex_bosque, elSuspiro}
+	var necesidadEnergetica
 	
-	method agregarCentral(unaCentral){
-		centrales.add(unaCentral)
+	//Setter
+	method necesidadEnergetica(necesidad){
+		necesidadEnergetica = necesidad
 	}
 	
 	method produccionEnergeticaParticular(unaCentral){
@@ -25,14 +27,25 @@ object springfield {
 		return centrales.filter({unaCentral => unaCentral.contamina()})
 	} 
 	
-	method cubrioNecesidad(necesidad){
-		return centrales.map({unaCentral => self.produccionEnergeticaParticular(unaCentral)}).sum() >= necesidad
+	method cubrioNecesidad(){
+		return centrales.map({unaCentral => self.produccionEnergeticaParticular(unaCentral)}).sum() >= necesidadEnergetica
 	}
 	
 	method centralQueMasProduce(){
 		return centrales.max({unaCentral => self.produccionEnergeticaParticular(unaCentral)})	
 	}
 	
+	method suministro(listaDeCentrales){
+		return listaDeCentrales.map({unaCentral => self.produccionEnergeticaParticular(unaCentral)}).sum()
+	}
+	
+	method suministroContaminante(){
+		return self.suministro(self.centralesContaminantes())
+	}
+	
+	method estaAlHorno(){
+		return (self.centralesContaminantes().size() == centrales.size()) || (self.suministroContaminante() > (necesidadEnergetica*0.5))
+	}
 		
 }
 
