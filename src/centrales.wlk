@@ -4,12 +4,12 @@ object burns {
 	var varillasDeUranio
 	
 	//Setter
-	method varilasDeUranio(cantidadDeVarillas){
+	method varillasDeUranio(cantidadDeVarillas){
 		varillasDeUranio = cantidadDeVarillas
 	}
 	
-	method produccionEnergetica(riquezaDelSuelo, VelocidadDelViento){
-		return 100000 * varillasDeUranio
+	method produccionEnergetica(riquezaDelSuelo, velocidadDelViento){
+		return 0.1 * varillasDeUranio
 	}
 	
 	method contamina(){
@@ -26,7 +26,7 @@ object ex_bosque{
 	}
 	
 	method produccionEnergetica(riquezaDelSuelo, velocidadDelViento){
-		return 500000 + capacidadDeCarbon * riquezaDelSuelo
+		return ((0.5) + (capacidadDeCarbon * riquezaDelSuelo))
 	}
 	
 	method contamina () = true
@@ -48,9 +48,9 @@ object elSuspiro{
 }
 
 object turbina1{
-	var produccionEolica = 200000
+	const produccionEolica = 0.2
 	
-	method produccionEolica () = 200000
+	method produccionEolica () = produccionEolica
 }
 
 object hidroelectrica {

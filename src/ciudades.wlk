@@ -11,8 +11,7 @@ object region {
 object springfield {
 	const velocidadDelViento = 10
 	const riquezaDelSuelo = 0.9
-	var centralesContaminantes = #{}
-	var centrales = #{}
+	var centrales = #{burns, ex_bosque, elSuspiro}
 	
 	method agregarCentral(unaCentral){
 		centrales.add(unaCentral)
@@ -22,30 +21,18 @@ object springfield {
 		return unaCentral.produccionEnergetica(riquezaDelSuelo, velocidadDelViento)
 	}
 	
-	method esCentralContaminante(unaCentral){
-		if(unaCentral.contamina()){
-			centralesContaminantes.add(unaCentral)
-		}
-	}
-	
 	method centralesContaminantes(){
-		return centralesContaminantes
+		return centrales.filter({unaCentral => unaCentral.contamina()})
 	} 
 	
 	method cubrioNecesidad(necesidad){
 		return centrales.map({unaCentral => self.produccionEnergeticaParticular(unaCentral)}).sum() >= necesidad
 	}
 	
-	// los siguientes dos metodos son los que tenia dudas
-	
-	method centralMasProduce(){
-		return centrales.filter({unaCentral => self.esLaQueMasProduce(unaCentral)}).first()
-		
+	method centralQueMasProduce(){
+		return centrales.max({unaCentral => self.produccionEnergeticaParticular(unaCentral)})	
 	}
 	
-	method esLaQueMasProduce(unaCentral){
-		return unaCentral.produccionEnergetica(self) >= centrales.map({otraCentral => otraCentral.produccionEnergetica(self)}).max()
-	}
 		
 }
 
